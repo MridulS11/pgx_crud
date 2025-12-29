@@ -4,19 +4,23 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"pg_crud/configs"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/joho/godotenv"
 )
 
 func Conn() *pgxpool.Pool{
 
-	pool, err := pgxpool.New(context.Background(), configs.Dsn)
+	godotenv.Load()
+	dsn := os.Getenv("DB_DSN")
+	pool, err := pgxpool.New(context.Background(), dsn)
 	if err != nil{
-		log.Println(configs.ErrString, err)
+		log.Fatalf(configs.ErrString + "%v", err)
 	}
 	err = pool.Ping(context.Background())
 	if err != nil{
-		log.Println(configs.ErrString, err)
+		log.Fatalf(configs.ErrString + "%v", err)
 	}
 	fmt.Println("Successfully Connected!")
 
