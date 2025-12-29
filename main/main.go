@@ -10,6 +10,7 @@ import (
 func main(){
 	pool := database.Conn()
 	defer pool.Close()
-	bookhandler := &handlers.ConnPool{Db: pool}
+	bookhandler := handlers.NewConnPool(pool)
+	//bookhandler := &handlers.ConnPool{Db: pool, Validate: v} //less idiomatic
 	server.Server(bookhandler)
 }
