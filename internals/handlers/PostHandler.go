@@ -13,7 +13,7 @@ func (c *ConnPool) PostHandler(w http.ResponseWriter, r * http.Request){
 
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil{
 		http.Error(w, configs.ErrString, http.StatusBadRequest)
-		return
+		return 
 	}
 
 	if err := c.Validate.Struct(book); err != nil{
